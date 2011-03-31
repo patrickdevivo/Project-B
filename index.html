@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Euler's Method</title>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
+<script language="javascript" type="text/javascript" src="flot/jquery.flot.js"></script>
+
+
+<script type="text/javascript">
+	//initialize stuff...
+	
+	x = 0;
+	y = 5;
+	dx = .01;
+	limit = 10;
+	
+	var euler = {label: "Euler's Estimation", data: []};
+	var graph_f = [];
+	
+	f = function f(input) {
+		return Math.exp(input);
+	}
+	//
+	
+	//for (n=1; n<=limit; n++) {
+	dx = 0.1;
+
+		//
+		for (i=1;i<=limit;i++) {
+			m = f(i);
+			x = dx + x;
+			y = y + m*dx;
+			euler.data.push([x,y]);
+			
+		graph_f.push([i, f(i)]);
+
+		}
+	//}
+	
+</script>
+</head>
+
+<body>
+
+<div id="graph" style="width:100%;height:800px"></div>
+
+
+</body>
+
+<script type="text/javascript">
+$(function () {
+	var options = {
+		yaxis: {
+		//	max: 300,	
+		},
+		xaxis: {
+			
+		},
+		series: {
+            lines: { show: true, lineWidth: 2 },
+			points: { show: true, radius: 0 },
+			shadowSize: 1,
+        },
+	}
+	$.plot($("#graph"), [ euler ], options);
+});
+</script>
+</html>
