@@ -2,10 +2,8 @@
 <html>
 <head>
 <title>Euler's Method</title>
-
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
 <script language="javascript" type="text/javascript" src="flot/jquery.flot.js"></script>
-
 
 <script type="text/javascript">
 	//initial conditions
@@ -38,26 +36,26 @@
 		graph_f.data.push([i, f_original(i)]); //draw graph
 		i = i+.01;
 	}
-	
-			
+		
+	//outer loop iterates five times for each estimation
 	for (k=1;k<=5;k++) {
-		dx = k*.05;
-		euler = "euler" + k;
-		console.log(euler);
+		dx = k*.05; //dx increases by .05 for each estimation
+		euler = "euler" + k; //the name of the array (from above) to hold data for each iteration
+		
+		//inner loop generates data points for each of the five estimations
 		for (i=0;i<=limit;i++) {
-			
+			//reset initial condition before generating data in each estimation
 			if(i === 0) {
 				x = x_initial;
 				y = y_initial;
 			}
-			
-			m = f_prime(x, y);
-			x = dx + x;
-			y = y + m*dx;
-			eval(euler).data.push([x,y]);
-		}
+			//the estimation logic
+			m = f_prime(x, y); //slope
+			x = dx + x; //new x value
+			y = y + m*dx; //new y value
+			eval(euler).data.push([x,y]); //add to the estimation array (for storing)
+		}	
 	}
-	
 </script>
 </head>
 
@@ -69,6 +67,7 @@
 </body>
 
 <script type="text/javascript">
+//Settings for graph
 $(function () {
 	var options = {
 		yaxis: {
@@ -88,11 +87,12 @@ $(function () {
         }
 	}
 	
-	
+	//adjust graph to fit window
 	width = $(window).width();
 	height = $(window).height();	
-	
 	$('#graph').width(width - 50).height(height - 25);	
+	
+	//finally, plot all the data sets (original function and then all euler estimations)
 	$.plot($("#graph"), [ graph_f, euler1, euler2, euler3, euler4, euler5 ], options);
 });
 </script>
